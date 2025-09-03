@@ -1,73 +1,96 @@
-# Welcome to your Lovable project
+🌍 Civitas AI – Frontend
 
-## Project info
+Crowdsourced Civic Issue Reporting & Resolution System
 
-**URL**: https://lovable.dev/projects/660b44a0-1f80-4587-9caa-2382efa2e00d
+Civitas AI is a platform where citizens report civic issues (potholes, garbage, broken lights, traffic, etc.), and municipal departments resolve them. Admins manage departments, reports, and rewards.
 
-## How can I edit this code?
+📌 Live Frontend: http://104.248.154.50:5000
 
-There are several ways of editing your application.
+🚀 Features
+👤 Citizens
 
-**Use Lovable**
+Login & signup portal (default landing page)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/660b44a0-1f80-4587-9caa-2382efa2e00d) and start prompting.
+Submit new issues via AI-powered assistant (with “Other” option)
 
-Changes made via Lovable will be committed automatically to this repo.
+Upload photos/videos of issues
 
-**Use your preferred IDE**
+View previous reports in detail (description, status, uploaded media like pothole/traffic images)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Notifications for report progress
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Earn points & redeem rewards in the store
 
-Follow these steps:
+Trust rating system
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Settings page for profile, password, notifications
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+🏢 Departments
 
-# Step 3: Install the necessary dependencies.
-npm i
+Separate login page
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Manage incoming reports assigned by location/category
 
-**Edit a file directly in GitHub**
+Detailed view with AI-enhanced description & media
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Update statuses: Pending / Done / Rejected
 
-**Use GitHub Codespaces**
+Rate citizens (1–10) → affects their points
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Report history archive
 
-## What technologies are used for this project?
+Settings page for department details
 
-This project is built with:
+🛠️ Admins
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Separate login page
 
-## How can I deploy this project?
+Add/manage departments (name, city, head, email, registration time)
 
-Simply open [Lovable](https://lovable.dev/projects/660b44a0-1f80-4587-9caa-2382efa2e00d) and click on Share -> Publish.
+Monitor all reports (filters + map view)
 
-## Can I connect a custom domain to my Lovable project?
+Manage reward store (add/edit/remove items)
 
-Yes, you can!
+View analytics (reports by type, avg resolution time, citizen engagement)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Settings page for admin profile & security
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+🎨 UI/UX
+
+Landing Page:
+
+Default = Citizen login (email/password + signup link)
+
+Link at bottom → Admin/Department login page
+
+Report Issue Page: AI chat interface 🤖
+
+Dropdown for issue type (Pothole, Garbage, Streetlight, Traffic, Water, Other)
+
+Description, location, time, upload photo/video
+
+AI validates before submission
+
+Citizen Report Detail View:
+
+Full description, map, status, uploaded media (e.g., pothole image)
+
+Design:
+
+Professional theme (blue/grey/white + yellow buttons)
+
+Glassmorphism UI
+
+Icons for issues & dashboards
+
+Responsive design
+
+⚡ Tech Stack
+
+Frontend: React / Next.js, Tailwind CSS
+
+API Integration: Axios/Fetch → connects to backend
+
+AI Assistant: OpenAI API for validation & enhancement
+
+Hosting: Deployed at http://104.248.154.50:5000
