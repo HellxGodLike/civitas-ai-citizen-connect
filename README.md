@@ -9,7 +9,7 @@ Municipal departments resolve them, and admins manage everything with rewards & 
 ---
 
 ## 🔗 Live Demo  
-👉 **[Civitas AI Frontend](http://104.248.154.50:5000)**  
+👉 **[Civitas AI Frontend](http://104.248.154.50:8080)**  
 
 ---
 
@@ -75,7 +75,7 @@ Municipal departments resolve them, and admins manage everything with rewards & 
 - **Frontend:** React / Next.js, Tailwind CSS  
 - **API Integration:** Axios/Fetch  
 - **AI Assistant:** OpenAI API for validation & enhancement  
-- **Hosting:** [http://104.248.154.50:5000](http://104.248.154.50:5000)  
+- **Hosting:** [http://104.248.154.50:8080](http://104.248.154.50:8080)  
 
 ---
 
