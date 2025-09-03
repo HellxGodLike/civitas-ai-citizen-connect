@@ -11,17 +11,23 @@ import {
   LogOut,
   Star,
   MapPin,
-  Calendar
+  Calendar,
+  ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import civitasLogo from '@/assets/civitas-logo.png';
+import civicBg from '@/assets/civic-city-bg.jpg';
+import ReportIssueForm from '@/components/ReportIssueForm';
+import RewardsStore from '@/components/RewardsStore';
+import UserSettings from '@/components/UserSettings';
 
 const CitizenDashboard = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [selectedReport, setSelectedReport] = useState(null);
 
   const handleLogout = () => {
     logout();
@@ -40,7 +46,7 @@ const CitizenDashboard = () => {
       status: 'pending',
       location: '123 Main St',
       dateReported: new Date('2024-01-15'),
-      description: 'Deep pothole causing traffic issues'
+      description: 'Deep pothole causing traffic issues, approximately 3 feet wide and 8 inches deep. Located near the intersection with Oak Street.'
     },
     {
       id: '2', 
@@ -49,8 +55,44 @@ const CitizenDashboard = () => {
       status: 'done',
       location: 'Park Avenue',
       dateReported: new Date('2024-01-10'),
-      description: 'Multiple trash bins overflowing'
+      description: 'Multiple trash bins overflowing in the downtown area. Attracting pests and creating unsanitary conditions.'
     },
+    {
+      id: '3',
+      issueType: 'streetlight',
+      title: 'Broken streetlight on Elm Street',
+      status: 'pending',
+      location: '456 Elm St',
+      dateReported: new Date('2024-01-12'),
+      description: 'Streetlight has been out for over a week, creating safety hazard for pedestrians at night.'
+    },
+    {
+      id: '4',
+      issueType: 'traffic',
+      title: 'Faulty traffic signal',
+      status: 'rejected',
+      location: 'Main St & 2nd Ave',
+      dateReported: new Date('2024-01-08'),
+      description: 'Traffic light stuck on red for northbound traffic during peak hours.'
+    },
+    {
+      id: '5',
+      issueType: 'water',
+      title: 'Water main leak',
+      status: 'done',
+      location: 'Riverside Drive',
+      dateReported: new Date('2024-01-05'),
+      description: 'Water pooling on street surface from apparent underground leak.'
+    },
+    {
+      id: '6',
+      issueType: 'pothole',
+      title: 'Multiple potholes on Highway 101',
+      status: 'pending',
+      location: 'Highway 101, Mile Marker 15',
+      dateReported: new Date('2024-01-18'),
+      description: 'Several potholes developed after recent storms, causing vehicle damage.'
+    }
   ];
 
   const getStatusBadge = (status: string) => {
@@ -72,7 +114,11 @@ const CitizenDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-accent/5">
+    <div 
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{ backgroundImage: `url(${civicBg})` }}
+    >
+      <div className="min-h-screen bg-background/90 backdrop-blur-sm">
       {/* Navigation Bar */}
       <nav className="glass-card border-0 border-b border-white/20 rounded-none">
         <div className="container mx-auto px-4 py-4">
@@ -140,7 +186,7 @@ const CitizenDashboard = () => {
       </nav>
 
       <div className="container mx-auto px-4 py-8">
-        {activeTab === 'dashboard' && (
+        {activeTab === 'dashboard' && !selectedReport && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl font-bold">Welcome back, {user?.name}!</h1>
@@ -203,11 +249,12 @@ const CitizenDashboard = () => {
               </GlassCardHeader>
               <GlassCardContent>
                 <div className="space-y-4">
-                  {mockReports.map((report) => (
-                    <div 
-                      key={report.id} 
-                      className="glass-panel p-4 rounded-lg hover-lift cursor-pointer"
-                    >
+                   {mockReports.map((report) => (
+                     <div 
+                       key={report.id} 
+                       className="glass-panel p-4 rounded-lg hover-lift cursor-pointer"
+                       onClick={() => setSelectedReport(report)}
+                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-start space-x-3 flex-1">
                           {getIssueIcon(report.issueType)}
@@ -240,52 +287,104 @@ const CitizenDashboard = () => {
           </div>
         )}
 
-        {activeTab === 'report' && (
-          <div className="max-w-2xl mx-auto">
+        {activeTab === 'dashboard' && selectedReport && (
+          <div className="space-y-6">
+            <div className="flex items-center space-x-4">
+              <Button 
+                variant="ghost" 
+                onClick={() => setSelectedReport(null)}
+                className="flex items-center space-x-2"
+              >
+                <ArrowLeft size={16} />
+                <span>Back to Dashboard</span>
+              </Button>
+            </div>
+
             <GlassCard>
               <GlassCardHeader>
-                <GlassCardTitle className="text-2xl text-center">
-                  Report a Civic Issue
-                </GlassCardTitle>
+                <div className="flex items-center justify-between">
+                  <GlassCardTitle className="text-xl">Report Details</GlassCardTitle>
+                  {getStatusBadge(selectedReport.status)}
+                </div>
               </GlassCardHeader>
-              <GlassCardContent>
-                <div className="text-center py-12">
-                  <AlertTriangle className="w-16 h-16 mx-auto text-accent mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">AI Chat Assistant Coming Soon</h3>
-                  <p className="text-muted-foreground">
-                    Our AI assistant will help you report issues step by step.
-                  </p>
+              <GlassCardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold mb-2">Issue Type</h3>
+                      <div className="flex items-center space-x-2">
+                        {getIssueIcon(selectedReport.issueType)}
+                        <span className="capitalize">{selectedReport.issueType}</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold mb-2">Title</h3>
+                      <p>{selectedReport.title}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold mb-2">Description</h3>
+                      <p className="text-muted-foreground">{selectedReport.description}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold mb-2">Location</h3>
+                      <div className="flex items-center space-x-2 text-muted-foreground">
+                        <MapPin className="w-4 h-4" />
+                        <span>{selectedReport.location}</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold mb-2">Date Reported</h3>
+                      <div className="flex items-center space-x-2 text-muted-foreground">
+                        <Calendar className="w-4 h-4" />
+                        <span>{selectedReport.dateReported.toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold mb-2">Status</h3>
+                      <div className="space-y-2">
+                        {getStatusBadge(selectedReport.status)}
+                        {selectedReport.status === 'done' && (
+                          <p className="text-sm text-green-600">✓ Issue has been resolved by the department</p>
+                        )}
+                        {selectedReport.status === 'pending' && (
+                          <p className="text-sm text-yellow-600">⏳ Report is being reviewed by the department</p>
+                        )}
+                        {selectedReport.status === 'rejected' && (
+                          <p className="text-sm text-red-600">✗ Report was rejected. Reason: Outside department jurisdiction.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="border rounded-lg p-4 bg-muted/20">
+                  <h3 className="font-semibold mb-2">Report ID</h3>
+                  <p className="font-mono text-sm">CR-{selectedReport.id.padStart(6, '0')}</p>
                 </div>
               </GlassCardContent>
             </GlassCard>
           </div>
         )}
 
+        {activeTab === 'report' && (
+          <ReportIssueForm />
+        )}
+
         {activeTab === 'rewards' && (
-          <div>
-            <h2 className="text-2xl font-bold mb-6">Rewards & Store</h2>
-            <GlassCard>
-              <GlassCardContent className="text-center py-12">
-                <Gift className="w-16 h-16 mx-auto text-accent mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Rewards Store</h3>
-                <p className="text-muted-foreground">Coming soon - redeem your points for rewards!</p>
-              </GlassCardContent>
-            </GlassCard>
-          </div>
+          <RewardsStore />
         )}
 
         {activeTab === 'settings' && (
-          <div>
-            <h2 className="text-2xl font-bold mb-6">Settings</h2>
-            <GlassCard>
-              <GlassCardContent className="text-center py-12">
-                <Settings className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
-                <h3 className="text-xl font-semibold mb-2">User Settings</h3>
-                <p className="text-muted-foreground">Profile and preferences coming soon!</p>
-              </GlassCardContent>
-            </GlassCard>
-          </div>
+          <UserSettings />
         )}
+      </div>
       </div>
     </div>
   );
