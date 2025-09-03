@@ -2,41 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Civitas AI Design System - Professional civic platform with glassmorphism effects */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Civic Color Palette - Professional blues, greys, whites with yellow accent */
+    --background: 220 15% 97%;
+    --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Civic Blue Theme */
+    --primary: 217 91% 59%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Professional Grey */
+    --secondary: 215 16% 46%;
+    --secondary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 220 13% 95%;
+    --muted-foreground: 215 16% 46%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Yellow Civic Accent */
+    --accent: 43 96% 56%;
+    --accent-foreground: 215 25% 15%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 215 25% 15%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 91% 59%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --radius: 0.75rem;
 
-    --radius: 0.5rem;
+    /* Glassmorphism Variables */
+    --glass-bg: 0 0% 100% / 0.1;
+    --glass-border: 0 0% 100% / 0.2;
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    
+    /* Civic Gradients */
+    --gradient-civic: linear-gradient(135deg, hsl(217 91% 59%) 0%, hsl(220 15% 97%) 50%, hsl(43 96% 56%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 59%) 0%, hsl(220 70% 70%) 100%);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +124,128 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background: var(--gradient-civic);
+    min-height: 100vh;
   }
+}
+
+@layer components {
+  /* Glassmorphism Card Components */
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/10 border border-white/20 shadow-lg;
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .glass-panel {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+  
+  /* Civic Button Variants */
+  .btn-civic {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg;
+    transition: var(--transition-smooth);
+  }
+  
+  .btn-yellow {
+    @apply bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg;
+    transition: var(--transition-smooth);
+  }
+  
+  /* Status Badges */
+  .badge-pending {
+    @apply bg-warning/10 text-warning border border-warning/20 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .badge-done {
+    @apply bg-success/10 text-success border border-success/20 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .badge-rejected {
+    @apply bg-destructive/10 text-destructive border border-destructive/20 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  /* Issue Icons */
+  .issue-icon {
+    @apply w-8 h-8 rounded-full p-1.5 flex items-center justify-center;
+  }
+  
+  .issue-pothole {
+    @apply bg-orange-100 text-orange-600;
+  }
+  
+  .issue-garbage {
+    @apply bg-green-100 text-green-600;
+  }
+  
+  .issue-light {
+    @apply bg-yellow-100 text-yellow-600;
+  }
+  
+  .issue-traffic {
+    @apply bg-red-100 text-red-600;
+  }
+  
+  .issue-water {
+    @apply bg-blue-100 text-blue-600;
+  }
+  
+  /* Animation Classes */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-success-bounce {
+    animation: successBounce 0.8s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism Utilities */
+  .glass-effect {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  
+  .text-gradient {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Hover Animations */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:scale-105 hover:-translate-y-1;
+  }
+  
+  .hover-glow {
+    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/20;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successBounce {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
